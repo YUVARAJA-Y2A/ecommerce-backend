@@ -36,13 +36,6 @@ module.exports = {
 
     return `${curDate}/${month}/${year}`;
   },
-  // mobileNumValidator: (value, helper) => {
-  //     var mobileNumberRegex = /^[a-zA-Z0-9\-().\s]{10,15}$/gm;
-  //     if (!value.match(mobileNumberRegex)) {
-  //         return helper.message('Invalid Mobile Number');
-  //     }
-  //     return value;
-  // },
   objectIDValidator: (value, helper) => {
     if (!objectID.isValid(value)) {
       return helper.message("Invalid ObjectID");

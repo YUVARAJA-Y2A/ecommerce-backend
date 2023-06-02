@@ -15,11 +15,11 @@ CartService.createItem = async (input) => {
     let getCart = await cart.findOne({ userId });
 
     if (getCart) {
-      let itemIndex = getCart.products.findIndex((p) => p.id === input.id);
+      let itemIndex = getCart.products.findIndex((p) => p.id === id);
       if (itemIndex > -1) {
         return {
           code: statusCodes.HTTP_OK,
-          message: `Item already exists in the cart`,
+          message: "Item already exists in the cart",
         };
       } else {
         getCart.products.push({
@@ -184,20 +184,25 @@ CartService.getCartItems = async (input) => {
 
     let { limit, offset } = getPagingData(page, size);
 
-    let result = await cart.findOne({ userId }).limit(limit).skip(offset);
+    let cartData = await cart.findOne({ userId }).limit(limit).skip(offset);
 
-    if (!result) {
+    if (!cartData) {
       return {
         code: statusCodes.HTTP_OK,
         message: "Cart not found",
-        data: result ? result : {},
+        data: cartData ? cartData : {},
       };
     }
+
+    let result = {
+      products: [...cartData.products],
+      cart_total: cartData.cart_total,
+    };
 
     return {
       code: statusCodes.HTTP_OK,
       message: messages.success,
-      data: result ? result.products : {},
+      data: result ? result : {},
     };
   } catch (err) {
     logger.info({

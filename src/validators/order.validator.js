@@ -3,8 +3,6 @@ const Joi = require("joi").extend(require("@joi/date"));
 
 const placeOrderSchema = Joi.object({
   userId: Joi.string().required(),
-  id: Joi.string().required(),
-  quantity: Joi.number(),
 });
 
 const cancelOrderSchema = Joi.object({
@@ -18,8 +16,15 @@ const reOrderSchema = Joi.object({
   quantity: Joi.number().required(),
 });
 
+const updateOrderSchema = Joi.object({
+  userId: Joi.string().required(),
+  id: Joi.string().required(),
+  order_status: Joi.number().required(),
+});
+
 module.exports = {
   placeOrderSchema,
   cancelOrderSchema,
   reOrderSchema,
+  updateOrderSchema,
 };

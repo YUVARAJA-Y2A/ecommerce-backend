@@ -10,9 +10,14 @@ const {
 let validator = require("express-joi-validation").createValidator({
   passError: true,
 });
-const { placeOrderSchema, cancelOrderSchema, reOrderSchema } =
-  require("../../validators").order;
-
+const {
+  placeOrderSchema,
+  cancelOrderSchema,
+  reOrderSchema,
+  updateOrderSchema,
+} = require("../../validators").order;
+orderRoutes.get("/orderList", orderController.getAllOrderItems);
+orderRoutes.get("/orderItems", orderController.getOrderItems);
 orderRoutes.post(
   "/placeOrder",
   validator.body(placeOrderSchema),
@@ -27,6 +32,11 @@ orderRoutes.post(
   "/reOrder",
   validator.body(reOrderSchema),
   orderController.reOrder
+);
+orderRoutes.put(
+  "/updateOrder",
+  validator.body(updateOrderSchema),
+  orderController.updateOrder
 );
 
 module.exports = orderRoutes;
